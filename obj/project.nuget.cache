@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "uKhF/WFxYDlgFcjMoptPAX8cAPhuAUd7XMVHnqO88hRQtqCSJYITrl4pWqvi0obAZbZc2tZ6pTFk2zrsaswjUA==",
+  "success": true,
+  "projectFilePath": "/Users/Boris/Projects/-School/DnD Essentials/dnd-essentials-backend/API.csproj",
+  "expectedPackageFiles": [
+    "/Users/Boris/.nuget/packages/microsoft.netcore.app.host.osx-x64/3.1.26/microsoft.netcore.app.host.osx-x64.3.1.26.nupkg.sha512"
+  ],
+  "logs": []
+}
