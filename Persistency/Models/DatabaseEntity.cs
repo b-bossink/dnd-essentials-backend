@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Persistency.Models
 {
-    public abstract class DatabaseTable
+    public abstract class DatabaseEntity
     {
         public int ID { get; set; }
     }
