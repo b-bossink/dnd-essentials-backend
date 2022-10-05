@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Persistency.DAL.Manager;
 using Persistency.Models;
+using Persistency.DAL;
 
 namespace API.Controllers
 {
@@ -9,7 +10,7 @@ namespace API.Controllers
     public class CharacterController : Controller
     {
         private readonly IDatabaseManager<Character> _manager = new CharacterManager(
-            new(@"Server=localhost,1433;Database=DnDEssentials;User Id=SA;Password=db80551Nk!"));
+            new DatabaseContext(@"Server=localhost,1433;Database=DnDEssentials;User Id=SA;Password=db80551Nk!"));
 
         // GET: api/character
         [HttpGet]

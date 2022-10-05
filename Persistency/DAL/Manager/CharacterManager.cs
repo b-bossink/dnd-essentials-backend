@@ -13,16 +13,16 @@ namespace Persistency.DAL.Manager
             _ctx = context;
         }
 
-        public bool Create(Character character)
+        public int Create(Character character)
         {
             try
             {
                 _ctx.Characters.Add(character);
-                return _ctx.SaveChanges() > 0;
+                return _ctx.SaveChanges();
             } catch (Exception e)
             {
                 Console.WriteLine(e);
-                return false;
+                return 0;
             }
         }
 
@@ -50,26 +50,26 @@ namespace Persistency.DAL.Manager
             }
         }
 
-        public bool Update(Character character)
+        public int Update(Character character)
         {
             var c = _ctx.Characters.SingleOrDefault(c => c.ID == character.ID);
             if (c != null)
             {
                 _ctx.Entry(c).CurrentValues.SetValues(character);
-                return _ctx.SaveChanges() > 0;
+                return _ctx.SaveChanges(); ;
             }
-            return false;
+            return 0;
         }
 
-        public bool Delete(int id)
+        public int Delete(int id)
         {
             Character c = _ctx.Characters.SingleOrDefault(c => c.ID == id);
             if (c != null)
             {
                 _ctx.Characters.Remove(c);
-                return _ctx.SaveChanges() > 0;
+                return _ctx.SaveChanges();
             }
-            return false;
+            return 0;
         }
     }
 }

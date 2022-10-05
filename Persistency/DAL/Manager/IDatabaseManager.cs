@@ -9,9 +9,9 @@ namespace Persistency.DAL.Manager
     {
         public IEnumerable<T> ReadAll();
         public T Read(int id);
-        public bool Create(T value);
-        public bool Update(T value);
-        public bool Delete(int id);
+        public int Create(T value);
+        public int Update(T value);
+        public int Delete(int id);
     }
 }
 
