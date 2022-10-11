@@ -9,12 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication", "Authentic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistency", "Persistency\Persistency.csproj", "{0EE48252-FA6A-4108-875E-3A8F13D39CC3}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Persistency", "DAL\Persistency.csproj", "{F731F8E5-3E11-4741-A81D-4761B0748E8F}"
-EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "DAL", "..\CampaignData\DAL.csproj", "{E5258850-EC17-4724-9C50-CB865CE9458A}"
-EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "API", "API.csproj", "{71D630F5-B1A8-4871-B601-23E267AB2182}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{92834BC9-601B-4EF4-AD51-59658E32B8E7}"
 EndProject
 Global

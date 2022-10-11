@@ -20,7 +20,7 @@ namespace API
             Configuration = configuration;
         }
 
-        private string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        private readonly string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
