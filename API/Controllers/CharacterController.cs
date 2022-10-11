@@ -13,18 +13,18 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
     {
-        private readonly IService<Character> _manager;
+        private readonly IService<Character> _service;
 
         public CharacterController(IConfiguration config)
         {
-            _manager = new CharacterManager(new DatabaseContext(config.GetConnectionString("localhostMSSQL")));
+            _service = new CharacterService(new DatabaseContext(config.GetConnectionString("localhostMSSQL")));
         }
 
         // GET: api/character
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var res = await _manager.ReadAll();
+            var res = await _service.ReadAll();
             if (res != null)
             {
                 return Ok(res);
@@ -36,7 +36,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var res = await _manager.Read(id);
+            var res = await _service.Read(id);
             if (res != null)
             {
                 return Ok(res);
@@ -48,7 +48,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Character values)
         {
-            int res = await _manager.Create(values);
+            int res = await _service.Create(values);
             if (res < 1)
             {
                 return StatusCode(422, "Something went wrong trying to POST character.");
@@ -60,7 +60,7 @@ namespace API.Controllers
         [HttpPut()]
         public async Task<IActionResult> Put([FromBody] Character value)
         {
-            int res = await _manager.Update(value);
+            int res = await _service.Update(value);
             if (res < 1)
             {
                 return StatusCode(422, "Something went wrong trying to UPDATE character.");
@@ -72,7 +72,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            int res = await _manager.Delete(id);
+            int res = await _service.Delete(id);
             if (res < 1)
             {
                 return StatusCode(422, "Something went wrong trying to DELETE character.");

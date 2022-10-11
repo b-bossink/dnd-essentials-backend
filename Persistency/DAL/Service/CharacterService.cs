@@ -7,10 +7,10 @@ using Persistency.Models;
 
 namespace Persistency.DAL.Service
 {
-    public class CharacterManager : IService<Character>
+    public class CharacterService : IService<Character>
     {
         private readonly DatabaseContext _ctx;
-        public CharacterManager(DatabaseContext context)
+        public CharacterService(DatabaseContext context)
         {
             _ctx = context;
         }
