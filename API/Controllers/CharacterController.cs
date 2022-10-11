@@ -1,50 +1,83 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Persistency.DAL.Manager;
+using Microsoft.Extensions.Configuration;
+using Persistency.DAL.Service;
 using Persistency.Models;
 using Persistency.DAL;
+using System.Configuration;
+using System.Collections;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
-    public class CharacterController : Controller
+    public class CharacterController : ControllerBase
     {
-        private readonly IDatabaseManager<Character> _manager = new CharacterManager(
-            new DatabaseContext(@"Server=localhost,1433;Database=DnDEssentials;User Id=SA;Password=db80551Nk!"));
+        private readonly IService<Character> _manager;
+
+        public CharacterController(IConfiguration config)
+        {
+            _manager = new CharacterManager(new DatabaseContext(config.GetConnectionString("localhostMSSQL")));
+        }
 
         // GET: api/character
         [HttpGet]
-        public IEnumerable<Character> Get()
+        public async Task<IActionResult> Get()
         {
-            return _manager.ReadAll();
+            var res = await _manager.ReadAll();
+            if (res != null)
+            {
+                return Ok(res);
+            }
+            return StatusCode(422, "Couldn't GET Character.");
         }
 
         // GET api/character/{id}
         [HttpGet("{id}")]
-        public Character Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return _manager.Read(id);
+            var res = await _manager.Read(id);
+            if (res != null)
+            {
+                return Ok(res);
+            }
+            return NotFound();
         }
 
         // POST api/character
         [HttpPost]
-        public void Post([FromBody] Character values)
+        public async Task<IActionResult> Post([FromBody] Character values)
         {
-            _manager.Create(values);
+            int res = await _manager.Create(values);
+            if (res < 1)
+            {
+                return StatusCode(422, "Something went wrong trying to POST character.");
+            }
+            return Ok();
         }
 
         // PUT api/character
         [HttpPut()]
-        public void Put([FromBody] Character value)
+        public async Task<IActionResult> Put([FromBody] Character value)
         {
-            _manager.Update(value);
+            int res = await _manager.Update(value);
+            if (res < 1)
+            {
+                return StatusCode(422, "Something went wrong trying to UPDATE character.");
+            }
+            return Ok();
         }
 
         // DELETE api/character
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _manager.Delete(id);
+            int res = await _manager.Delete(id);
+            if (res < 1)
+            {
+                return StatusCode(422, "Something went wrong trying to DELETE character.");
+            }
+            return Ok();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Persistency.DAL;
-using Persistency.DAL.Manager;
+using Persistency.DAL.Service;
 using Persistency.Models;
 
 namespace Testing.UnitTests
@@ -59,7 +59,7 @@ namespace Testing.UnitTests
         public void CreateCharacter()
         {
             // Assign
-            STUB<Character> manager = new STUB<Character>(characterTestData);
+            STUB<Character> service = new STUB<Character>(characterTestData);
             int changed;
             int expected = 1;
             Character c = new Character
@@ -77,11 +77,11 @@ namespace Testing.UnitTests
             };
 
             // Act
-            changed = manager.Create(c);
+            changed = service.Create(c).Result;
 
             // Assert
             Assert.AreEqual(expected, changed, "Unexpected amount of entries got changed.");
-            var updatedData = manager.GetData();
+            var updatedData = service.GetData();
             Assert.AreEqual(c, updatedData[updatedData.Count() - 1], "Newest character added to STUB does not equal character defined beforehand.");
         }
 
@@ -89,7 +89,7 @@ namespace Testing.UnitTests
         public void UpdateCharacter()
         {
             // Assign
-            STUB<Character> manager = new STUB<Character>(characterTestData);
+            STUB<Character> service = new STUB<Character>(characterTestData);
             int changed;
             int id = 4;
             int expected = 1;
@@ -108,24 +108,24 @@ namespace Testing.UnitTests
             };
 
             // Act
-            changed = manager.Update(c);
+            changed = service.Update(c).Result;
 
             // Assert
             Assert.AreEqual(expected, changed);
-            Assert.AreEqual(c, manager.GetData().SingleOrDefault(e => e.ID == id), "Character with given ID does not equal what has been defined before updating, or it doesn't exist.");
+            Assert.AreEqual(c, service.GetData().SingleOrDefault(e => e.ID == id), "Character with given ID does not equal what has been defined before updating, or it doesn't exist.");
         }
 
         [TestMethod]
         public void ReadCharacter()
         {
             // Assign
-            STUB<Character> manager = new STUB<Character>(characterTestData);
+            STUB<Character> service = new STUB<Character>(characterTestData);
             int id = 5;
             Character expected = characterTestData.SingleOrDefault(e => e.ID == id);
             Character result;
 
             // Act
-            result = manager.Read(id);
+            result = service.Read(id).Result;
 
             // Assert
             Assert.IsNotNull(expected, $"Character with id {id} doesn't exist in test data. Make sure it does before testing this method.");
@@ -136,12 +136,12 @@ namespace Testing.UnitTests
         public void ReadAllCharacters()
         {
             // Assign
-            STUB<Character> manager = new STUB<Character>(characterTestData);
+            STUB<Character> service = new STUB<Character>(characterTestData);
             List<Character> expected = characterTestData;
             IEnumerable<Character> result;
 
             // Act
-            result = manager.ReadAll();
+            result = service.ReadAll().Result;
 
             // Assert
             CollectionAssert.AreEqual(expected, result.ToList(), "Test data does not match retrieved data.");

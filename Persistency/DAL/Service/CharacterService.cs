@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using Persistency.Models;
 
-namespace Persistency.DAL.Manager
+namespace Persistency.DAL.Service
 {
-    public class CharacterManager : IDatabaseManager<Character>
+    public class CharacterManager : IService<Character>
     {
         private readonly DatabaseContext _ctx;
         public CharacterManager(DatabaseContext context)
@@ -13,12 +15,12 @@ namespace Persistency.DAL.Manager
             _ctx = context;
         }
 
-        public int Create(Character character)
+        public async Task<int> Create(Character character)
         {
             try
             {
                 _ctx.Characters.Add(character);
-                return _ctx.SaveChanges();
+                return await _ctx.SaveChangesAsync();
             } catch (Exception e)
             {
                 Console.WriteLine(e);
@@ -26,11 +28,11 @@ namespace Persistency.DAL.Manager
             }
         }
 
-        public Character Read(int id)
+        public async Task<Character> Read(int id)
         {
             try
             {
-                return _ctx.Characters.SingleOrDefault(c => c.ID == id);
+                return await _ctx.Characters.SingleOrDefaultAsync(c => c.ID == id);
             } catch (Exception e)
             {
                 Console.WriteLine(e);
@@ -38,11 +40,11 @@ namespace Persistency.DAL.Manager
             }
         }
 
-        public IEnumerable<Character> ReadAll()
+        public async Task<IEnumerable<Character>> ReadAll()
         {
             try
             {
-                return _ctx.Characters;
+                return await _ctx.Characters.ToListAsync();
             } catch (Exception e)
             {
                 Console.WriteLine(e);
@@ -50,24 +52,24 @@ namespace Persistency.DAL.Manager
             }
         }
 
-        public int Update(Character character)
+        public async Task<int> Update(Character character)
         {
-            var c = _ctx.Characters.SingleOrDefault(c => c.ID == character.ID);
+            var c = await _ctx.Characters.SingleOrDefaultAsync(c => c.ID == character.ID);
             if (c != null)
             {
                 _ctx.Entry(c).CurrentValues.SetValues(character);
-                return _ctx.SaveChanges(); ;
+                return await _ctx.SaveChangesAsync();
             }
             return 0;
         }
 
-        public int Delete(int id)
+        public async Task<int> Delete(int id)
         {
             Character c = _ctx.Characters.SingleOrDefault(c => c.ID == id);
             if (c != null)
             {
                 _ctx.Characters.Remove(c);
-                return _ctx.SaveChanges();
+                return await _ctx.SaveChangesAsync();
             }
             return 0;
         }

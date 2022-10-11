@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace Persistency.Models
 {
     public class Character : DatabaseEntity
