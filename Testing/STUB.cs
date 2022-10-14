@@ -1,14 +1,14 @@
 ﻿using System;
-using Persistency.Models;
 using System.Collections.Generic;
-using Persistency.DAL.Service;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Repository;
+using Models;
 
 namespace Testing
 {
-	public class STUB<T> : IService<T> where T : DatabaseEntity
+	public class STUB<T> : IRepo<T> where T : ModelBase
     {
         protected readonly List<T> _data;
 

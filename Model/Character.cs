@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Persistency.Models
+namespace Models
 {
-    public class Character : DatabaseEntity
+    public class Character : ModelBase
     {
         public string Name { get; set; }
         public string Class { get; set; }
@@ -15,6 +16,8 @@ namespace Persistency.Models
         public int Intelligence { get; set; }
         public int Wisdom { get; set; }
         public int Charisma { get; set; }
+
+        public virtual ICollection<Campaign> Campaigns { get; set; }
     }
 }
 

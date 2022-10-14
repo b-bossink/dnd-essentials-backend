@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using Persistency.Models;
+using Models;
 
-namespace Persistency.DAL.Service
+namespace Repository
 {
-    public interface IService<T> where T : DatabaseEntity
+    // TODO: create repo layer where communication with DB (ORM) is made.
+    public interface IRepo<T> where T : ModelBase
     {
         public Task<IEnumerable<T>> ReadAll();
         public Task<T> Read(int id);

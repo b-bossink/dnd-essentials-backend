@@ -8,9 +8,14 @@
   <ItemGroup>
     <None Remove="EntityFramework" />
     <None Remove="Swashbuckle.AspNetCore" />
+    <None Remove="AutoMapper" />
+    <None Remove="Newtonsoft.Json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Persistency\Persistency.csproj">
+    <ProjectReference Include="..\Model\Models.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\Service\Service.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

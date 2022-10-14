@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Models;
-using System.Configuration;
-using System.Collections;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Linq;
 using Service;
 using Models.ViewModel;
@@ -13,44 +12,44 @@ using Service.Mapper;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
-    public class CharacterController : ControllerBase
+    public class CampaignController : ControllerBase
     {
-        private readonly IService<Character> _service;
+        private readonly IService<Campaign> _service;
 
-        public CharacterController(IConfiguration config)
+        public CampaignController(IConfiguration config)
         {
-            _service = new CharacterService(new Repository.CharacterRepo(config.GetConnectionString("localhostMSSQL")));
+            _service = new CampaignService(new Repository.CampaignRepo(config.GetConnectionString("localhostMSSQL")));
         }
 
-        // GET: api/character
+        // GET: api/campaign
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var res = await _service.GetAll();
             if (res != null)
             {
-                return Ok(res.Select(c => ViewModelMapper.Map<GETCharacterViewModel>(c)));
+                return Ok(res.Select(c => ViewModelMapper.Map<GETCampaignViewModel>(c)));
             }
             return StatusCode(422, "Couldn't GET Character.");
         }
 
-        // GET api/character/{id}
+        // GET api/campaign/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var res = await _service.Get(id);
             if (res != null)
             {
-                return Ok(ViewModelMapper.Map<GETCharacterViewModel>(res));
+                return Ok(ViewModelMapper.Map<GETCampaignViewModel>(res));
             }
             return NotFound();
         }
 
-        // POST api/character
+        // POST api/campaign
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CharacterViewModel value)
+        public async Task<IActionResult> Post([FromBody] CampaignViewModel model)
         {
-            int res = await _service.Create(ViewModelMapper.Map<Character>(value));
+            int res = await _service.Create(ViewModelMapper.Map<Campaign>(model));
             if (res < 1)
             {
                 return StatusCode(422, "Something went wrong trying to POST character.");
@@ -58,13 +57,13 @@ namespace API.Controllers
             return Ok();
         }
 
-        // PUT api/character
+        // PUT api/campaign
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] CharacterViewModel value)
+        public async Task<IActionResult> Put([FromBody] CampaignViewModel model, int id)
         {
-            Character character = ViewModelMapper.Map<Character>(value);
-            character.ID = id;
-            int res = await _service.Update(character);
+            var campaign = ViewModelMapper.Map<Campaign>(model);
+            campaign.ID = id;
+            int res = await _service.Update(campaign);
             if (res < 1)
             {
                 return StatusCode(422, "Something went wrong trying to UPDATE character.");
@@ -72,7 +71,7 @@ namespace API.Controllers
             return Ok();
         }
 
-        // DELETE api/character
+        // DELETE api/campaign
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -83,6 +82,7 @@ namespace API.Controllers
             }
             return Ok();
         }
+
     }
 }
 

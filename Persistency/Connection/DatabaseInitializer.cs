@@ -1,7 +1,9 @@
 ﻿using System;
-using Persistency.Models;
+using System.Collections;
+using System.Collections.Generic;
+using Models;
 
-namespace Persistency.DAL
+namespace Repository.Connection
 {
     public class DatabaseInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<DatabaseContext>
     {
@@ -17,7 +19,8 @@ namespace Persistency.DAL
                 Constitution = 3,
                 Intelligence = 4,
                 Wisdom = 5,
-                Charisma = 6
+                Charisma = 6,
+                Campaigns = new List<Campaign>()
             });
         }
     }

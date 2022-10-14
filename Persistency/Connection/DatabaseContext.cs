@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Configuration;
 using System.Data.Entity;
-using Persistency.Models;
+using Models;
 
-namespace Persistency.DAL
+namespace Repository.Connection
 {
     public class DatabaseContext : DbContext
     {
         public DbSet<Character> Characters { get; set; }
+        public DbSet<Campaign> Campaigns { get; set; }
 
         public DatabaseContext(string connectionString) : base(connectionString) { }
 
