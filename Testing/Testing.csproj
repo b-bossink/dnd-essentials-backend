@@ -17,11 +17,14 @@
     <ProjectReference Include="..\Persistency\Persistency.csproj" />
     <ProjectReference Include="..\Model\Models.csproj" />
     <ProjectReference Include="..\Service\Service.csproj" />
+    <ProjectReference Include="..\DnD API Adapter\DnD API Adapter.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="UnitTests\" />
+    <None Remove="IntegrationTests\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UnitTests\" />
+    <Folder Include="IntegrationTests\" />
   </ItemGroup>
 </Project>

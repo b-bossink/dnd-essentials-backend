@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>DnD_API_Adapter</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="System.Net.Http.Formatting.Extension" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="APIModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http.Formatting.Extension" Version="5.2.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="APIModel\" />
+  </ItemGroup>
+</Project>

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Model\Models.cspr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{034EFC32-6110-4215-9DDA-81E5AEA4D829}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnD API Adapter", "DnD API Adapter\DnD API Adapter.csproj", "{322E1644-7EE8-443F-8C23-2231BA176E0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{034EFC32-6110-4215-9DDA-81E5AEA4D829}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{034EFC32-6110-4215-9DDA-81E5AEA4D829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{034EFC32-6110-4215-9DDA-81E5AEA4D829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{322E1644-7EE8-443F-8C23-2231BA176E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{322E1644-7EE8-443F-8C23-2231BA176E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{322E1644-7EE8-443F-8C23-2231BA176E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{322E1644-7EE8-443F-8C23-2231BA176E0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
