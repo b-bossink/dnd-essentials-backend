@@ -21,7 +21,8 @@ build_image:
     DOCKER_TLS_CERTDIR: "/certs"
     IMAGE_NAME: bbossink/dnd-essentials-api
     IMAGE_TAG: 0.0.1-alpha
-  script:
+  before_script:
     - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+  script:
     - docker build -t $IMAGE_NAME:$IMAGE_TAG .
     - docker push $IMAGE_NAME:$IMAGE_TAG
