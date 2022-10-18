@@ -8,7 +8,7 @@ using Service;
 namespace Testing.UnitTests
 {
     [TestClass]
-    public class CRUDTests
+    public class CharacterServiceTests
     {
         private static readonly List<Character> characterTestData = new List<Character>() {
             new Character
