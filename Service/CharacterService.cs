@@ -8,8 +8,8 @@ namespace Service
 {
 	public class CharacterService : ICRUDService<Character>
 	{
-		private readonly IRepo<Character> _repo;
-		public CharacterService(IRepo<Character> repo)
+		private readonly ICRUDRepo<Character> _repo;
+		public CharacterService(ICRUDRepo<Character> repo)
 		{
 			_repo = repo;
 		}

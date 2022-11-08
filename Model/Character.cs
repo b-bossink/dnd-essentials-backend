@@ -17,6 +17,9 @@ namespace Models
         public int Wisdom { get; set; }
         public int Charisma { get; set; }
 
+        public int? UserId { get; set; }
+        public virtual User User { get; set; }
+
         public virtual ICollection<Campaign> Campaigns { get; set; }
     }
 }

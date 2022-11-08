@@ -10,7 +10,7 @@ using Repository.Connection;
 
 namespace Repository
 {
-    public class CharacterRepo : IRepo<Character>
+    public class CharacterRepo : ICRUDRepo<Character>
     {
         private readonly string _connection;
         public CharacterRepo(string connectionString)
@@ -87,7 +87,7 @@ namespace Repository
             {
                 using (DatabaseContext ctx = new DatabaseContext(_connection))
                 {
-                    Character c = ctx.Characters.SingleOrDefault(c => c.ID == id);
+                    Character c = await ctx.Characters.SingleOrDefaultAsync(c => c.ID == id);
                     if (c != null)
                     {
                         ctx.Characters.Remove(c);

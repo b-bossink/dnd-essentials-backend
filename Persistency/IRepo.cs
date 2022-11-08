@@ -6,8 +6,7 @@ using Models;
 
 namespace Repository
 {
-    // TODO: create repo layer where communication with DB (ORM) is made.
-    public interface IRepo<T> where T : ModelBase
+    public interface ICRUDRepo<T> where T : ModelBase
     {
         public Task<IEnumerable<T>> ReadAll();
         public Task<T> Read(int id);

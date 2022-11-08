@@ -8,8 +8,8 @@ namespace Service
 {
 	public class CampaignService : ICRUDService<Campaign>
 	{
-		private readonly IRepo<Campaign> _repo;
-		public CampaignService(IRepo<Campaign> repo)
+		private readonly ICRUDRepo<Campaign> _repo;
+		public CampaignService(ICRUDRepo<Campaign> repo)
 		{
 			_repo = repo;
         }

@@ -16,21 +16,35 @@ namespace Service.Mapper
         {
             var config = new MapperConfiguration(cfg =>
             {
+                // Character
                 cfg.CreateMap<Character, CharacterViewModel>()
                 .ForMember(dest => dest.CampaignIDs, act => act.MapFrom(src => src.Campaigns.Select(c => c.ID).ToList()))
                 .ReverseMap()
                 .ForMember(dest => dest.Campaigns, act => act.MapFrom(src => src.CampaignIDs.Select(id => new Campaign { ID = id }).ToList()));
 
+                cfg.CreateMap<Character, GETCharacterViewModel>()
+                //.ForMember(dest => dest.OwnerID, act => act.MapFrom(src => src.OwnerId))
+                .IncludeBase<Character, CharacterViewModel>();
+
+                // Campaign
                 cfg.CreateMap<Campaign, CampaignViewModel>()
                 .ForMember(dest => dest.CharacterIDs, act => act.MapFrom(src => src.Characters.Select(c => c.ID).ToList()))
                 .ReverseMap()
                 .ForMember(dest => dest.Characters, act => act.MapFrom(src => src.CharacterIDs.Select(id => new Character { ID = id }).ToList()));
 
-                cfg.CreateMap<Character, GETCharacterViewModel>()
-                .IncludeBase<Character, CharacterViewModel>();
-
                 cfg.CreateMap<Campaign, GETCampaignViewModel>()
+                //.ForMember(dest => dest.OwnerID, act => act.MapFrom(src => src.OwnerId))
                 .IncludeBase<Campaign, CampaignViewModel>();
+
+                // User
+                cfg.CreateMap<User, UserViewModel>()
+                .ReverseMap();
+
+                cfg.CreateMap<User, GETUserViewModel>()
+                .ForMember(dest => dest.CharacterIDs, act => act.MapFrom(src => src.Characters.Select(c => c.ID).ToList()))
+                .ForMember(dest => dest.CampaignIDs, act => act.MapFrom(src => src.Campaigns.Select(c => c.ID).ToList()))
+                .IncludeBase<User, UserViewModel>();
+
             });
 
             _mapper = new AutoMapper.Mapper(config);

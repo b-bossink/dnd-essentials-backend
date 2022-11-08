@@ -8,7 +8,7 @@ using Models;
 
 namespace Testing
 {
-	public class STUB<T> : IRepo<T> where T : ModelBase
+	public class STUB<T> : ICRUDRepo<T> where T : ModelBase
     {
         protected readonly List<T> _data;
 

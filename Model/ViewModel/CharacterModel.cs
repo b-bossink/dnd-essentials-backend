@@ -25,6 +25,7 @@ namespace Models.ViewModel
     public class GETCharacterViewModel : CharacterViewModel
     {
         public int ID { get; set; }
+        public int OwnerID { get; set; }
     }
 }
 

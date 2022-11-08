@@ -9,7 +9,7 @@ using Repository.Connection;
 
 namespace Repository
 {
-	public class CampaignRepo : IRepo<Campaign>
+	public class CampaignRepo : ICRUDRepo<Campaign>
 	{
         private readonly string _connection;
         public CampaignRepo(string connectionString)
@@ -41,7 +41,7 @@ namespace Repository
             {
                 using (DatabaseContext ctx = new DatabaseContext(_connection))
                 {
-                    Campaign c = ctx.Campaigns.Include(c => c.Characters).SingleOrDefault(c => c.ID == id);
+                    Campaign c = await ctx.Campaigns.SingleOrDefaultAsync(c => c.ID == id);
                     if (c != null)
                     {
                         ctx.Campaigns.Remove(c);
