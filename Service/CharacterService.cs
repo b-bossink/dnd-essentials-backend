@@ -6,7 +6,7 @@ using Repository;
 
 namespace Service
 {
-	public class CharacterService : IService<Character>
+	public class CharacterService : ICRUDService<Character>
 	{
 		private readonly IRepo<Character> _repo;
 		public CharacterService(IRepo<Character> repo)

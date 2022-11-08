@@ -6,7 +6,7 @@ using Models;
 
 namespace Service
 {
-	public interface IService<T> where T : ModelBase
+	public interface ICRUDService<T> where T : ModelBase
 	{
 		public Task<T> Get(int id);
 

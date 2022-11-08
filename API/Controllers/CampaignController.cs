@@ -14,7 +14,7 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class CampaignController : ControllerBase
     {
-        private readonly IService<Campaign> _service;
+        private readonly ICRUDService<Campaign> _service;
 
         public CampaignController(IConfiguration config)
         {

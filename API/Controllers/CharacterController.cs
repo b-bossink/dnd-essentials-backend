@@ -15,7 +15,7 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
     {
-        private readonly IService<Character> _service;
+        private readonly ICRUDService<Character> _service;
 
         public CharacterController(IConfiguration config)
         {

@@ -6,7 +6,7 @@ using Repository;
 
 namespace Service
 {
-	public class CampaignService : IService<Campaign>
+	public class CampaignService : ICRUDService<Campaign>
 	{
 		private readonly IRepo<Campaign> _repo;
 		public CampaignService(IRepo<Campaign> repo)
