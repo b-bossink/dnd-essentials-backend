@@ -7,8 +7,8 @@ namespace Service.Authentication
 {
 	public class AuthenticationService : IAuthenticationService
 	{
-        private readonly IAuthenticationRepo _repo;
-        public AuthenticationService(IAuthenticationRepo repo)
+        private readonly UserRepo _repo;
+        public AuthenticationService(UserRepo repo)
         {
             _repo = repo;
         }

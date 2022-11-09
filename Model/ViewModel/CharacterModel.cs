@@ -19,13 +19,13 @@ namespace Models.ViewModel
         public int Intelligence { get; set; }
         public int Wisdom { get; set; }
         public int Charisma { get; set; }
+        public int OwnerID { get; set; }
         public ICollection<int> CampaignIDs { get; set; }
     }
 
     public class GETCharacterViewModel : CharacterViewModel
     {
         public int ID { get; set; }
-        public int OwnerID { get; set; }
     }
 }
 

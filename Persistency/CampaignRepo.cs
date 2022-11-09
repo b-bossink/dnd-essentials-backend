@@ -72,13 +72,13 @@ namespace Repository
             }
         }
 
-        public async Task<System.Collections.Generic.IEnumerable<Campaign>> ReadAll()
+        public async Task<IEnumerable<Campaign>> ReadAll()
         {
             try
             {
                 using (DatabaseContext ctx = new DatabaseContext(_connection))
                 {
-                    return await ctx.Campaigns.ToListAsync();
+                    return await ctx.Campaigns.Include(c => c.Characters).ToListAsync();
                 }
             }
             catch (Exception e)

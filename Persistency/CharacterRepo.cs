@@ -25,6 +25,7 @@ namespace Repository
                 using (DatabaseContext ctx = new DatabaseContext(_connection))
                 {
                     character.Campaigns = await RepoHelper.PopulateProperties<Campaign>(character.Campaigns, ctx.Campaigns);
+                    character.User = await ctx.Users.FirstOrDefaultAsync(u => u.ID == character.UserId);
                     ctx.Characters.Add(character);
                     return await ctx.SaveChangesAsync();
                 }
@@ -41,7 +42,7 @@ namespace Repository
             {
                 using (DatabaseContext ctx = new DatabaseContext(_connection))
                 {
-                    return await ctx.Characters.Include(c => c.Campaigns).SingleOrDefaultAsync(c => c.ID == id);
+                    return await ctx.Characters.Include(c => c.Campaigns).Include(c => c.User).SingleOrDefaultAsync(c => c.ID == id);
                 }
             } catch (Exception e)
             {

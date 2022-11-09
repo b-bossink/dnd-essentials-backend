@@ -22,7 +22,7 @@ namespace API.Controllers
 
         public AuthenticationController(IConfiguration config)
         {
-            _service = new AuthenticationService(new Repository.AuthenticationRepo(config.GetConnectionString("localhostMSSQL")));
+            _service = new AuthenticationService(new Repository.UserRepo(config.GetConnectionString("localhostMSSQL")));
         }
 
         // POST api/authentication/register
@@ -45,7 +45,7 @@ namespace API.Controllers
             {
                 return Ok();
             }
-            return NotFound();
+            return Unauthorized("Invalid credentials.");
         }
     }
 }
