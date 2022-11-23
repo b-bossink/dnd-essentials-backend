@@ -1,6 +1,7 @@
 ﻿using DnD_API_Adapter;
 using DnD_API_Adapter.APIModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Service.CharacterGeneration;
 
 namespace Testing.IntegrationTests
 {
@@ -24,7 +25,7 @@ namespace Testing.IntegrationTests
 		[TestMethod]
 		public void GetDragonborn()
 		{
-			// Arrange
+			// Assign
 			DNDClient client = new DNDClient();
 			APIRace dragonborn;
 			string raceIndex = "dragonborn";
@@ -37,6 +38,25 @@ namespace Testing.IntegrationTests
 			Assert.IsNotNull(dragonborn);
 			Assert.AreEqual(expectedName, dragonborn.Name, "Expected index did not match actual");
 		}
-	}
+
+		[TestMethod]
+        public void RandomizeByRace()
+        {
+            // Assign
+            var service = new GenerationService(new DNDClient(), new FakeDiceSimulator(3));
+            Stats stats;
+
+            // Act
+            stats = service.Generate("dragonborn").Result;
+
+            // Assert
+            Assert.AreEqual(5, stats.Strength);
+            Assert.AreEqual(4, stats.Charisma);
+            Assert.AreEqual(3, stats.Constitution);
+            Assert.AreEqual(3, stats.Dexterity);
+            Assert.AreEqual(3, stats.Intelligence);
+            Assert.AreEqual(3, stats.Wisdom);
+        }
+    }
 }
 
