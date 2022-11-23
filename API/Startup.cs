@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Models;
 using Service.Mapper;
+using Service.Notifications;
 
 namespace API
 {
@@ -29,16 +30,19 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddSwaggerGen();
             services.AddCors(options =>
             {
                 options.AddPolicy(name: _myAllowSpecificOrigins,
                                   policy =>
-                                  {
-                                      policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
-                                  });
+                                      policy.WithOrigins("http://localhost:4200")
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod()
+                                      .AllowCredentials()
+                                  );
             });
+            services.AddControllers();
+            services.AddSwaggerGen();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +70,7 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<NotificationHub>("/notif");
             });
 
             ViewModelMapper.Initialize();

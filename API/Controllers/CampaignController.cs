@@ -8,6 +8,9 @@ using System.Linq;
 using Service;
 using Models.ViewModel;
 using Service.Mapper;
+using Repository;
+using Microsoft.AspNetCore.SignalR;
+using Service.Notifications;
 
 namespace API.Controllers
 {
@@ -16,9 +19,10 @@ namespace API.Controllers
     {
         private readonly ICRUDService<Campaign> _service;
 
-        public CampaignController(IConfiguration config)
+        public CampaignController(IConfiguration config, IHubContext<NotificationHub> hub)
         {
-            _service = new CampaignService(new Repository.CampaignRepo(config.GetConnectionString("localhostMSSQL")));
+            _service = new CampaignService
+                (new Repository.CampaignRepo(config.GetConnectionString("localhostMSSQL")), hub);
         }
 
         // GET: api/campaign
@@ -55,6 +59,17 @@ namespace API.Controllers
                 return StatusCode(422, "Something went wrong trying to POST character.");
             }
             return Ok();
+        }
+
+        // POST api/campaign/{id}?add-character={characterId}
+        [HttpPost]
+        [Route("{id}/add-character/{characterId}")]
+        public async Task<IActionResult> AddCharacter(int id, int characterId)
+        {
+            var res = await ((CampaignService)_service).AddCharacter(id, characterId);
+            if (res > 0)
+                return Ok();
+            else return StatusCode(422);
         }
 
         // PUT api/campaign

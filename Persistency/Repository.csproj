@@ -8,11 +8,15 @@
   <ItemGroup>
     <None Remove="EntityFramework" />
     <None Remove="DAL\Manager\" />
+    <None Remove="Event\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Models.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Event\" />
   </ItemGroup>
 </Project>

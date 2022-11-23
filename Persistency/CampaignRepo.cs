@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Models;
 using Repository;
 using Repository.Connection;
+using Repository.Event;
 
 namespace Repository
 {
 	public class CampaignRepo : ICRUDRepo<Campaign>
-	{
+    {
+        public event EventHandler<AddCharacterToCampaignArgs> AddCharacterEvent;
         private readonly string _connection;
         public CampaignRepo(string connectionString)
         {
@@ -94,7 +96,7 @@ namespace Repository
             {
                 using (DatabaseContext ctx = new DatabaseContext(_connection))
                 {
-                    var c = await ctx.Characters.SingleOrDefaultAsync(c => c.ID == campaign.ID);
+                    var c = await ctx.Campaigns.SingleOrDefaultAsync(c => c.ID == campaign.ID);
                     if (c != null)
                     {
                         ctx.Entry(c).CurrentValues.SetValues(campaign);
@@ -106,6 +108,36 @@ namespace Repository
             {
                 Console.WriteLine(e);
                 return 0;
+            }
+        }
+
+        public async Task<int> AddCharacter(int campaignId, int characterId)
+        {
+            using (DatabaseContext ctx = new DatabaseContext(_connection))
+            {
+                var character = await ctx.Characters.SingleOrDefaultAsync(c => c.ID == characterId);
+                var campaign = await ctx.Campaigns.SingleOrDefaultAsync(c => c.ID == campaignId);
+
+                if (character == null || campaign == null)
+                {
+                    AddCharacterEvent.Invoke(this, new AddCharacterToCampaignArgs(character, campaign, false));
+                    return 0;
+                }
+
+                if (campaign.Characters.Contains(character))
+                {
+                    AddCharacterEvent.Invoke(this, new AddCharacterToCampaignArgs(character, campaign, false));
+                    return 0;
+                }
+
+                campaign.Characters.Add(character);
+                int res = await ctx.SaveChangesAsync();
+                if (res > 0)
+                {
+                    AddCharacterEvent.Invoke(this, new AddCharacterToCampaignArgs(character, campaign, true));
+                }
+                AddCharacterEvent.Invoke(this, new AddCharacterToCampaignArgs(character, campaign, false));
+                return res;
             }
         }
     }

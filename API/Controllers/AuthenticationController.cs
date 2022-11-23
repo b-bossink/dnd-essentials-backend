@@ -25,15 +25,20 @@ namespace API.Controllers
             _service = new AuthenticationService(new Repository.UserRepo(config.GetConnectionString("localhostMSSQL")));
         }
 
+        //TODO: deny duplicate email or username
         // POST api/authentication/register
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] UserViewModel value)
         {
+            bool exists = await _service.Exists(value.Username, value.Password) ||
+                await _service.Exists(value.Emailaddress, value.Password);
+            if (exists) return Ok(false);
+
             User user = ViewModelMapper.Map<User>(value);
             var res = await _service.Register(user);
             Debug.WriteLine(res);
-            return Ok();
+            return Ok(true);
         }
 
         // POST api/authentication/login
@@ -43,9 +48,9 @@ namespace API.Controllers
         {
             if (await _service.Exists(usernameOrEmail, password))
             {
-                return Ok();
+                return Ok(true);
             }
-            return Unauthorized("Invalid credentials.");
+            return Ok(false);
         }
     }
 }
