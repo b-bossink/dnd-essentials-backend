@@ -3,7 +3,7 @@ using DnD_API_Adapter.APIModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Service.CharacterGeneration;
 
-namespace Testing.IntegrationTests
+namespace Testing.Integration
 {
     [TestClass]
 	public class DNDAPIConnection

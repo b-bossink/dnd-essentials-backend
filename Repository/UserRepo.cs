@@ -60,6 +60,22 @@ namespace Repository
             }
         }
 
+        public async Task<User> Read(string username)
+        {
+            using (DatabaseContext ctx = new DatabaseContext(_connection))
+            {
+                return await ctx.Users.Include(u => u.Characters).Include(u => u.Campaigns).SingleOrDefaultAsync(u => u.Username == username);
+            }
+        }
+
+        public async Task<User> Read(string usernameOrEmail, string password)
+        {
+            using (DatabaseContext ctx = new DatabaseContext(_connection))
+            {
+                return await ctx.Users.Include(u => u.Characters).Include(u => u.Campaigns).SingleOrDefaultAsync(u => ( u.Username == usernameOrEmail || u.Emailaddress == usernameOrEmail ) && u.Password == password);
+            }
+        }
+
         public async Task<IEnumerable<Character>> ReadCharacters(int id)
         {
             using (DatabaseContext ctx = new DatabaseContext(_connection))

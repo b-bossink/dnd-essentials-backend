@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
 using Service;
 
-namespace Testing.UnitTests
+namespace Testing.Unit
 {
     [TestClass]
     public class CampaignServiceTests

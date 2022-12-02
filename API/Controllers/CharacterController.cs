@@ -9,18 +9,23 @@ using System.Linq;
 using Service;
 using Models.ViewModel;
 using Service.Mapper;
+using Microsoft.AspNetCore.Authorization;
+using Service.Authentication;
 
 namespace API.Controllers
 {
+    //TODO: better error handling.
+    //TODO: fixed unauthorized msg.
     [Route("api/[controller]")]
-    public class CharacterController : ControllerBase
+    public class CharacterController : AuthorizedController
     {
         private readonly ICRUDService<Character> _service;
 
-        public CharacterController(IConfiguration config)
+        public CharacterController(IConfiguration config, JwtHandler jwt) : base(config, jwt)
         {
             _service = new CharacterService(new Repository.CharacterRepo(config.GetConnectionString("localhostMSSQL")));
         }
+
 
         // GET: api/character
         [HttpGet]
@@ -48,8 +53,13 @@ namespace API.Controllers
 
         // POST api/character
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CharacterViewModel value)
+        public async Task<IActionResult> Post([FromBody] CharacterViewModel value, string token)
         {
+            if (!await _authenticationService.UserIsToken(token, value.OwnerID))
+            {
+                return Unauthorized();
+            }
+
             int res = await _service.Create(ViewModelMapper.Map<Character>(value));
             if (res < 1)
             {
@@ -74,8 +84,14 @@ namespace API.Controllers
 
         // DELETE api/character
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id, string token)
         {
+            var user = await _authenticationService.GetUser(token);
+            var character = await _service.Get(id);
+            if (user == null || user.ID != character.User.ID)
+                return Unauthorized();
+
+
             int res = await _service.Delete(id);
             if (res < 1)
             {

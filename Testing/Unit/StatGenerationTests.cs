@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Service.CharacterGeneration;
 
-namespace Testing.UnitTests
+namespace Testing.Unit
 {
 	[TestClass]
 	public class StatGenerationTests

@@ -11,5 +11,11 @@ namespace Models
 		public virtual ICollection<Character> Characters { get; set; }
 		public virtual ICollection<Campaign> Campaigns { get; set; }
 	}
+
+	public class UserInfo
+    {
+        public string Username { get; set; }
+        public string Emailaddress { get; set; }
+    }
 }
 

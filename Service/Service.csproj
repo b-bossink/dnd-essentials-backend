@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Model\Models.csproj" />
-    <ProjectReference Include="..\Persistency\Repository.csproj" />
+    <ProjectReference Include="..\Repository\Repository.csproj" />
     <ProjectReference Include="..\DnD API Adapter\DnD API Adapter.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -16,10 +16,12 @@
     <None Remove="Authentication\" />
     <None Remove="Notification\" />
     <None Remove="Microsoft.AspNetCore.SignalR" />
+    <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.31" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mapper\" />

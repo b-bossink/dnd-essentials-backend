@@ -20,9 +20,9 @@ namespace API.Controllers
     {
         private readonly IAuthenticationService _service;
 
-        public AuthenticationController(IConfiguration config)
+        public AuthenticationController(IConfiguration config, JwtHandler jwt)
         {
-            _service = new AuthenticationService(new Repository.UserRepo(config.GetConnectionString("localhostMSSQL")));
+            _service = new AuthenticationService(new Repository.UserRepo(config.GetConnectionString("localhostMSSQL")), jwt);
         }
 
         //TODO: deny duplicate email or username
@@ -46,11 +46,8 @@ namespace API.Controllers
         [Route("login")]
         public async Task<IActionResult> Login(string usernameOrEmail, string password)
         {
-            if (await _service.Exists(usernameOrEmail, password))
-            {
-                return Ok(true);
-            }
-            return Ok(false);
+            var res = await _service.Login(usernameOrEmail, password);
+            return Ok(res);
         }
     }
 }

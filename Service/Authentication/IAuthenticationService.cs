@@ -8,8 +8,9 @@ namespace Service.Authentication
 	{
 		public Task<int> Register(User info);
 		public Task<int> Update(User user);
-		public Task<bool> Exists(string usernameOrEmail, string password);
-		public Task<int> Delete(int id);
+		public Task<AuthenticationResponse> Login(string usernameOrEmail, string password);
+        public Task<bool> Exists(string usernameOrEmail, string password);
+        public Task<int> Delete(int id);
 	}
 }
 
