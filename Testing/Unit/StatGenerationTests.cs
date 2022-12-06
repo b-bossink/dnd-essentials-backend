@@ -18,12 +18,12 @@ namespace Testing.Unit
             stats = service.Generate("dragonborn").Result;
 
 			// Assert
-			Assert.AreEqual(5, stats.Strength);
-			Assert.AreEqual(4, stats.Charisma);
-            Assert.AreEqual(3, stats.Constitution);
-            Assert.AreEqual(3, stats.Dexterity);
-            Assert.AreEqual(3, stats.Intelligence);
-            Assert.AreEqual(3, stats.Wisdom);
+			Assert.AreEqual(5, stats.Strength.Total);
+			Assert.AreEqual(4, stats.Charisma.Total);
+            Assert.AreEqual(3, stats.Constitution.Total);
+            Assert.AreEqual(3, stats.Dexterity.Total);
+            Assert.AreEqual(3, stats.Intelligence.Total);
+            Assert.AreEqual(3, stats.Wisdom.Total);
         }
 	}
 }
