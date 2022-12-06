@@ -233,4 +233,6 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 
+# temp files
 .DS_Store
+__pycache__/
