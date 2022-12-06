@@ -22,7 +22,6 @@ build_image:
     IMAGE_NAME: bbossink/dnd-essentials-api
     IMAGE_TAG: 0.0.1-alpha
   before_script:
-    - docker-machine start
     - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   script:
     - docker build -t $IMAGE_NAME:$IMAGE_TAG .
