@@ -11,6 +11,7 @@ using Models.ViewModel;
 using Service.Mapper;
 using Microsoft.AspNetCore.Authorization;
 using Service.Authentication;
+using DnD_API_Adapter;
 
 namespace API.Controllers
 {
@@ -20,10 +21,12 @@ namespace API.Controllers
     public class CharacterController : AuthorizedController
     {
         private readonly ICRUDService<Character> _service;
+        private readonly DNDClient _dndApiClient;
 
         public CharacterController(IConfiguration config, JwtHandler jwt) : base(config, jwt)
         {
             _service = new CharacterService(new Repository.CharacterRepo(config.GetConnectionString("localhostMSSQL")));
+            _dndApiClient = new DNDClient();
         }
 
 
@@ -49,6 +52,32 @@ namespace API.Controllers
                 return Ok(ViewModelMapper.Map<GETCharacterViewModel>(res));
             }
             return NotFound();
+        }
+
+        // GET api/character/races
+        [HttpGet("races")]
+        public async Task<IActionResult> GetAllRaces()
+        {
+            var res = await _dndApiClient.GetAllOfIndex("races");
+            if (res == null || res.Results.Count() < 1)
+            {
+                return NotFound();
+            }
+
+            return Ok(res.Results);
+        }
+
+        // GET api/character/races
+        [HttpGet("classes")]
+        public async Task<IActionResult> GetAllClasses()
+        {
+            var res = await _dndApiClient.GetAllOfIndex("classes");
+            if (res == null || res.Results.Count() < 1)
+            {
+                return NotFound();
+            }
+
+            return Ok(res.Results);
         }
 
         // POST api/character
