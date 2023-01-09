@@ -11,9 +11,11 @@ using Service.Mapper;
 using Repository;
 using Microsoft.AspNetCore.SignalR;
 using Service.Notifications;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class CampaignController : ControllerBase
     {

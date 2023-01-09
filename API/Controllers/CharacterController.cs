@@ -12,13 +12,14 @@ using Service.Mapper;
 using Microsoft.AspNetCore.Authorization;
 using Service.Authentication;
 using DnD_API_Adapter;
+using Microsoft.AspNetCore.Authentication;
+using Newtonsoft.Json.Linq;
 
 namespace API.Controllers
 {
-    //TODO: better error handling.
-    //TODO: fixed unauthorized msg.
+    [Authorize]
     [Route("api/[controller]")]
-    public class CharacterController : AuthorizedController
+    public class CharacterController : AuthenticatedController
     {
         private readonly ICRUDService<Character> _service;
         private readonly DNDClient _dndApiClient;
@@ -82,9 +83,9 @@ namespace API.Controllers
 
         // POST api/character
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CharacterViewModel value, string token)
+        public async Task<IActionResult> Post([FromBody] CharacterViewModel value)
         {
-            if (!await _authenticationService.UserIsToken(token, value.OwnerID))
+            if (!await _authenticationService.UserIsToken(await GetToken(), value.OwnerID))
             {
                 return Unauthorized();
             }
@@ -113,13 +114,14 @@ namespace API.Controllers
 
         // DELETE api/character
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id, string token)
+        public async Task<IActionResult> Delete(int id)
         {
-            var user = await _authenticationService.GetUser(token);
             var character = await _service.Get(id);
-            if (user == null || user.ID != character.User.ID)
+            if (character == null) return NotFound();
+            if (!await _authenticationService.UserIsToken(await GetToken(), character.User.ID))
+            {
                 return Unauthorized();
-
+            }
 
             int res = await _service.Delete(id);
             if (res < 1)

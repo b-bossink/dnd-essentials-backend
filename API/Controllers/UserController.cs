@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Models;
@@ -12,8 +13,9 @@ using Service.Mapper;
 
 namespace API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
-    public class UserController : AuthorizedController
+    public class UserController : AuthenticatedController
     {
         private readonly UserService _service;
         private readonly CharacterService _characterService;
@@ -39,9 +41,9 @@ namespace API.Controllers
 
         // GET: api/user/{id}/character
         [HttpGet("{id}/character")]
-        public async Task<IActionResult> GetCharacters(int id, string token)
+        public async Task<IActionResult> GetCharacters(int id)
         {
-            if (!await _authenticationService.UserIsToken(token, id)) {
+            if (!await _authenticationService.UserIsToken(await GetToken(), id)) {
                 return Unauthorized();
             }
 
@@ -52,9 +54,9 @@ namespace API.Controllers
 
         // GET: api/user/{id}/campaign
         [HttpGet("{id}/campaign")]
-        public async Task<IActionResult> GetCampaigns(int id, string token)
+        public async Task<IActionResult> GetCampaigns(int id)
         {
-            if (!await _authenticationService.UserIsToken(token, id))
+            if (!await _authenticationService.UserIsToken(await GetToken(), id))
             {
                 return Unauthorized();
             }
