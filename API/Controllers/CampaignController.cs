@@ -36,7 +36,7 @@ namespace API.Controllers
             {
                 return Ok(res.Select(c => ViewModelMapper.Map<GETCampaignViewModel>(c)));
             }
-            return StatusCode(422, "Couldn't GET Character.");
+            return StatusCode(422, "Couldn't GET campaign.");
         }
 
         // GET api/campaign/{id}

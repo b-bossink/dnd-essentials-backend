@@ -21,11 +21,11 @@ namespace Service
             {
                 ((CampaignRepo)_repo).AddCharacterEvent += async (s, args) =>
                 {
-                    if (_notificationService == null || !args.success)
+                    if (_notificationService == null || !args.success || args.campaign.UserId == args.character.UserId)
                     {
                         return;
                     }
-
+                    
                     await _notificationService.Notify(args.character.User.ID, Notification
                         .CharacterAddedToCampaign(args.campaign.User.Username, args.character.Name, args.campaign.Name));
                 };
